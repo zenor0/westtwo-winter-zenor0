@@ -1,22 +1,22 @@
 from pydantic import BaseModel
 
-
-class TodoItem(BaseModel):
-    title: str = 'Untitled'
-    content: str = ''
-    status: bool = False
-    add_time: int | None = None
-    end_time: int | None = None
+class UserItem(BaseModel):
+    username: str
+    password: str
     
     class Config:
         orm_mode = True
+
+class TokenFeedback(BaseModel):
+    id: int
+    username: str
+    token: str
 
 
 class ResponseBase(BaseModel):
     code: int = 200
     msg: str = 'success'
-    data: list = []
-    
+    data: dict = {}
     
     class Config:
         orm_mode = True
