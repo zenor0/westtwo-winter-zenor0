@@ -1,22 +1,18 @@
-# 单人考核
+# West2 final lab
 
-请按照以下方式运行项目
+## Requirements
 
++ node.js
++ FastAPI
++ MySQL
 
-### 下载node环境
-```
-https://nodejs.org/en/
-```
+## Deploy
 
-### 使用vscode或者WebStorm打开项目
-
-### 安装依赖项
-```sh
-npm install
-```
-
-### 启动项目
-
-```sh
-npm run dev
-```
+1. Install node requirements
+	```sh
+	npm install
+	```
+2. Launch vue
+   run command `npm run dev`
+3. Launch FastAPI
+   run command `uvicorn api.main:app` to boot back-end
