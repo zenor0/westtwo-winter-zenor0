@@ -31,6 +31,13 @@ def get_history_by_token(token, db: Session, skip: int = 0, limit: int = 100):
         models.HistoryTable.userid == user.id).offset(skip).limit(limit).all()
     return ret
 
+def create_history(data: schemas.SongItem, userid, db: Session):
+    dbItem = models.HistoryTable(**data.dict())
+    dbItem.userid = userid
+    dbItem.download_time = utils.Timestamp2FormattedDate()
+    
+    db.add(dbItem)
+    return
 
 def mark_history(id, fav, db: Session):
     return db.query(models.HistoryTable).filter(models.HistoryTable.id == id).update({models.HistoryTable.fav: fav})
