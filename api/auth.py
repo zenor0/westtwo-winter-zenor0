@@ -5,9 +5,10 @@ import jwt
 
 SECRET_KEY = "Mu51CD0WnLO4D_5EcrE7keY!" 
 ALGORITHM = "HS256"
+DEFAULT_SIGN_PERIOD = 60*24
 
 def create_token(id, db: Session):
-    access_token_expires = timedelta(minutes=60)
+    access_token_expires = timedelta(minutes=DEFAULT_SIGN_PERIOD)
     expire = datetime.utcnow() + access_token_expires
 
     payload = {
@@ -25,9 +26,10 @@ def create_token(id, db: Session):
                                   )
     dbTokenItem = models.TokenTable(**tokenItem.dict())
     db.add(dbTokenItem)
+    
     return access_token
- 
- 
+
+
 def authorized_user(token, db: crud.Session):
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     username: str = payload.get("sub")
