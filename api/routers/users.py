@@ -28,6 +28,9 @@ def login(data: schemas.UserItem, db: Session = Depends(get_db)):
 def register(data: schemas.RegisterItem, db: Session = Depends(get_db)):
     if data.password != data.checkPassword:
         return ResponseBase(code=201, message='两次输入的密码不一致')
+    
+    if len(data.password) < 8 or len(data.password) > 18:
+        return ResponseBase(code=201, message='密码长度不合法')
 
     result = crud.get_user_by_name(data.username, db)
     if result != None:

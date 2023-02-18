@@ -36,6 +36,9 @@ def create_token(id, db: Session):
 
 def authorized_user(request: Request, db: crud.Session):
     token = request.headers.get('Authorization')
+    if token == None:
+        return None
+    
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     # username: str = payload.get("sub")
 

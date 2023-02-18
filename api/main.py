@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from sqlalchemy.orm import Session
 
 
 from . import schemas, utils
 from .database import SessionLocal, engine
 from .routers import users, search, history
+from .schemas import ResponseBase
 from fastapi.middleware.cors import CORSMiddleware
 
 # FastAPI Configuration
@@ -15,7 +16,7 @@ app.include_router(users.router)
 app.include_router(search.router)
 app.include_router(history.router)
 
-origins = ["http://localhost:5173", "*"]
+origins = ["http://localhost:5173/*", '*']
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -23,6 +24,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+@app.exception_handler(Exception)
+def func(request: Request, exc: Exception):
+    return ResponseBase(code=222)
 
 @app.get("/")
 async def home_page():
