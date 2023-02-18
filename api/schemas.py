@@ -19,6 +19,12 @@ class MarkRequestItem(BaseModel):
     id: int
     fav: bool
 
+class TokenItem(BaseModel):
+    userid: int
+    token: str
+    hmac_key: str
+    sign_time: str
+    expire_time: str
 
 class TokenFeedback(BaseModel):
     id: int

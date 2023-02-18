@@ -1,7 +1,8 @@
 from typing import Optional, List
-from sqlalchemy import String, create_engine, TIMESTAMP, BOOLEAN, INTEGER, ForeignKey
+from sqlalchemy import String, create_engine, TIMESTAMP, BOOLEAN, INTEGER, ForeignKey, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
+from .database import engine
 
 class Base(DeclarativeBase):
     pass
@@ -26,7 +27,7 @@ class HistoryTable(Base):
 
     uid: Mapped[int] = mapped_column(INTEGER, primary_key=True, autoincrement=True)
     download_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
-    userid: Mapped[int] = mapped_column(ForeignKey("UserTable.id"), nullable=False)
+    userid: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     rid: Mapped[int] = mapped_column(INTEGER, nullable=False)
     favorite: Mapped[bool] = mapped_column(BOOLEAN)
     deleted: Mapped[bool] = mapped_column(BOOLEAN)
@@ -40,8 +41,9 @@ class TokenTable(Base):
     __tablename__ = "token"
 
     uid: Mapped[int] = mapped_column(INTEGER, primary_key=True, autoincrement=True)
-    userid: Mapped[int] = mapped_column(ForeignKey("UserTable.id"), nullable=False)
+    userid: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     token: Mapped[str] = mapped_column(String(512))
+    hmac_key: Mapped[str] = mapped_column(String(512), nullable=True)
     sign_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
     expire_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
     
@@ -49,3 +51,4 @@ class TokenTable(Base):
         return {'uid': self.userid, 'token': self.token, 'exp_time': self.expire_time}
     
     
+Base.metadata.create_all(engine)
