@@ -41,8 +41,8 @@ def delete(data: schemas.DeleteHistoryRequestItem, request: Request, db: Session
         return ResponseBase(code=201, message='Token expired')
 
     if data.type == 0:
-        crud.delete_single_history(data.id, db)
+        crud.softdelete_single_history(data.id, db)
     elif data.type == 1:
-        crud.delete_list_of_history(data.list, db)
+        crud.softdelete_list_of_history(data.list, db)
 
     return ResponseBase()

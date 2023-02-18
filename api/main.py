@@ -24,16 +24,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.commit()
-        db.close()
-
-
 @app.get("/")
 async def home_page():
     return "Hi! This is music APIs website, please visit /docs or /redocs for more interactive information."

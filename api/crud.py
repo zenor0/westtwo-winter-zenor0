@@ -28,7 +28,7 @@ def get_history_by_token(token, db: Session, skip: int = 0, limit: int = 100):
         models.UserTable.id == dbToken.userid).one()
 
     ret = db.query(models.HistoryTable).filter(
-        models.HistoryTable.userid == user.id).offset(skip).limit(limit).all()
+        models.HistoryTable.userid == user.id, models.HistoryTable.deleted == 0).offset(skip).limit(limit).all()
     return ret
 
 def create_history(data: schemas.SongItem, userid, db: Session):
@@ -43,14 +43,14 @@ def mark_history(id, fav, db: Session):
     return db.query(models.HistoryTable).filter(models.HistoryTable.id == id).update({models.HistoryTable.fav: fav})
 
 
-def delete_single_history(id, db: Session):
-    return db.query(models.HistoryTable).filter(models.HistoryTable.id == id).delete()
+def softdelete_single_history(id, db: Session):
+    return db.query(models.HistoryTable).filter(models.HistoryTable.id == id).update({models.HistoryTable.deleted: 1})
 
 
-def delete_list_of_history(list, db: Session):
+def softdelete_list_of_history(list, db: Session):
     cnt = 0
     for item in list:
-        delete_single_history(item, db)
+        softdelete_single_history(item, db)
         cnt += 1
 
     return cnt

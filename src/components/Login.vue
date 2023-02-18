@@ -166,7 +166,8 @@ const Router = useRouter()
 import useUserStore from "@/store/user";
 const userStore = useUserStore()
 
-const banner = new URL('../assets/login-banner.png', import.meta.url).href
+const banner = new URL('../assets/banner.svg', import.meta.url).href
+// const banner = new URL('../assets/login-banner.png', import.meta.url).href
 const title = import.meta.env.VITE_APP_TITLE
 
 // 表单类型，login 登录，reset 重置密码
@@ -372,9 +373,9 @@ const countdown = (time)=>{
     background-color: var(--el-fill-color-light);
     .banner {
       position: absolute;
-      width: calc(100% + 100px);
-      right: -50px;
-      top: 100px
+      width: calc(80%);
+      right: 40px;
+      top: 150px
     }
   }
   .login-form {
