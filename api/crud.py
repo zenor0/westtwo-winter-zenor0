@@ -27,9 +27,22 @@ def get_history_by_token(token, db: Session, skip: int = 0, limit: int = 100):
     user = db.query(models.UserTable).filter(
         models.UserTable.id == dbToken.userid).one()
 
-    ret = db.query(models.HistoryTable).filter(
-        models.HistoryTable.userid == user.id, models.HistoryTable.deleted == 0).offset(skip).limit(limit).all()
-    return ret
+    result = db.query(models.HistoryTable).filter(
+        models.HistoryTable.userid == user.id, models.HistoryTable.deleted == 0).offset(skip).limit(limit)
+    
+    return result.all()
+
+
+def get_history_total_by_token(token, db: Session):
+    dbToken = db.query(models.TokenTable).filter(
+        models.TokenTable.token == token).first()
+    user = db.query(models.UserTable).filter(
+        models.UserTable.id == dbToken.userid).one()
+
+    result = db.query(models.HistoryTable).filter(
+        models.HistoryTable.userid == user.id, models.HistoryTable.deleted == 0)
+    
+    return result.count()
 
 def create_history(data: schemas.SongItem, userid, db: Session):
     dbItem = models.HistoryTable(**data.dict())

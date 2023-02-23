@@ -33,7 +33,7 @@
         </div>
         <div class="flex-bar">
           <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>
-<!--          <el-link type="primary" :underline="false" @click="formType = 'reset'">忘记密码了?</el-link>-->
+         <el-link type="primary" :underline="false" @click="formType = 'reset'">忘记密码了?</el-link>
         </div>
         <el-button :loading="loading" type="primary" size="large" style="width: 100%;" @click.prevent="handleLogin">登录</el-button>
         <div class="sub-link">
@@ -58,25 +58,25 @@
               </template>
             </el-input>
           </el-form-item>
-<!--          <el-form-item prop="email">-->
-<!--            <el-input ref="name" v-model="registerForm.email" placeholder="电子邮箱" tabindex="1" autocomplete="on">-->
-<!--              <template #prefix>-->
-<!--                <el-icon>-->
-<!--                </el-icon>-->
-<!--              </template>-->
-<!--            </el-input>-->
-<!--          </el-form-item>-->
-<!--          <el-form-item prop="captcha">-->
-<!--            <el-input ref="captcha" v-model="registerForm.captcha" placeholder="验证码" tabindex="2" autocomplete="on">-->
-<!--              <template #prefix>-->
-<!--                <el-icon>-->
-<!--                </el-icon>-->
-<!--              </template>-->
-<!--              <template #append>-->
-<!--                <el-button @click="GetCaptcha(registerForm.email)" :disabled="!isAvailable">{{ countdownNumber }}</el-button>-->
-<!--              </template>-->
-<!--            </el-input>-->
-<!--          </el-form-item>-->
+         <el-form-item prop="email">
+           <el-input ref="name" v-model="registerForm.email" placeholder="电子邮箱" tabindex="1" autocomplete="on">
+             <template #prefix>
+               <el-icon>
+               </el-icon>
+             </template>
+           </el-input>
+         </el-form-item>
+         <el-form-item prop="captcha">
+           <el-input ref="captcha" v-model="registerForm.captcha" placeholder="验证码" tabindex="2" autocomplete="on">
+             <template #prefix>
+               <el-icon>
+               </el-icon>
+             </template>
+             <template #append>
+               <el-button @click="GetCaptcha(registerForm.email)" :disabled="!isAvailable">{{ countdownNumber }}</el-button>
+             </template>
+           </el-input>
+         </el-form-item>
           <el-form-item prop="password">
             <el-input ref="password" v-model="registerForm.password" :type="passwordType" placeholder="密码" tabindex="3" autocomplete="on">
               <template #prefix>
@@ -113,25 +113,25 @@
           <h3 class="title">忘记密码了? 🔒</h3>
         </div>
         <div>
-<!--          <el-form-item prop="email">-->
-<!--            <el-input ref="name" v-model="resetForm.email" placeholder="电子邮箱" tabindex="1" autocomplete="on">-->
-<!--              <template #prefix>-->
-<!--                <el-icon>-->
-<!--                </el-icon>-->
-<!--              </template>-->
-<!--            </el-input>-->
-<!--          </el-form-item>-->
-<!--          <el-form-item prop="captcha">-->
-<!--            <el-input ref="captcha" v-model="resetForm.captcha" placeholder="验证码" tabindex="2" autocomplete="on">-->
-<!--              <template #prefix>-->
-<!--                <el-icon>-->
-<!--                </el-icon>-->
-<!--              </template>-->
-<!--              <template #append>-->
-<!--                <el-button @click="GetCaptcha(resetForm.email)" :disabled="!isAvailable">{{ countdownNumber }}</el-button>-->
-<!--              </template>-->
-<!--            </el-input>-->
-<!--          </el-form-item>-->
+         <el-form-item prop="email">
+           <el-input ref="name" v-model="resetForm.email" placeholder="电子邮箱" tabindex="1" autocomplete="on">
+             <template #prefix>
+               <el-icon>
+               </el-icon>
+             </template>
+           </el-input>
+         </el-form-item>
+         <el-form-item prop="captcha">
+           <el-input ref="captcha" v-model="resetForm.captcha" placeholder="验证码" tabindex="2" autocomplete="on">
+             <template #prefix>
+               <el-icon>
+               </el-icon>
+             </template>
+             <template #append>
+               <el-button @click="GetCaptcha(resetForm.email)" :disabled="!isAvailable">{{ countdownNumber }}</el-button>
+             </template>
+           </el-input>
+         </el-form-item>
           <el-form-item prop="password">
             <el-input ref="password" v-model="resetForm.password" :type="passwordType" placeholder="新密码" tabindex="3" autocomplete="on">
               <template #prefix>
@@ -210,13 +210,13 @@ const registerRules = ref({
   username: [
     { required: true, trigger: 'blur', message: '请输入用户名' }
   ],
-  // email: [
-  //   { required: true, trigger: 'blur', message: '请输入电子邮箱' },
-  //   { pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '请输入正确的邮箱', trigger: ['blur', 'change'] }
-  // ],
-  // captcha: [
-  //   { required: true, trigger: 'blur', message: '请输入验证码' },
-  // ],
+  email: [
+    { required: true, trigger: 'blur', message: '请输入电子邮箱' },
+    { pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '请输入正确的邮箱', trigger: ['blur', 'change'] }
+  ],
+  captcha: [
+    { required: true, trigger: 'blur', message: '请输入验证码' },
+  ],
   password: [
     { required: true, trigger: 'blur', message: '请输入密码' },
     { min: 6, max: 18, trigger: ['blur', 'change'], message: '密码长度为6到18位' }
@@ -245,6 +245,10 @@ function handleRegister() {
   })
 }
 
+function handleCaptcha(){
+  
+}
+
 // 重置密码
 const resetForm = ref({
   email: '',
@@ -252,13 +256,13 @@ const resetForm = ref({
   password: ''
 })
 const resetRules = ref({
-  // email: [
-  //   { required: true, trigger: 'blur', message: '请输入电子邮箱' },
-  //   { pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '请输入正确的邮箱', trigger: ['blur', 'change'] }
-  // ],
-  // captcha: [
-  //   { required: true, trigger: 'blur', message: '请输入验证码' },
-  // ],
+  email: [
+    { required: true, trigger: 'blur', message: '请输入电子邮箱' },
+    { pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/, message: '请输入正确的邮箱', trigger: ['blur', 'change'] }
+  ],
+  captcha: [
+    { required: true, trigger: 'blur', message: '请输入验证码' },
+  ],
   password: [
     { required: true, trigger: 'blur', message: '请输入新密码' },
     { min: 6, max: 18, trigger: 'blur', message: '密码长度为6到18位' }

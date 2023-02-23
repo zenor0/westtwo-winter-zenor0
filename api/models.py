@@ -57,7 +57,7 @@ class TokenTable(Base):
 
     uid: Mapped[int] = mapped_column(
         INTEGER, primary_key=True, autoincrement=True)
-    userid: Mapped[int] = mapped_column()
+    userid: Mapped[int] = mapped_column(INTEGER)
     # userid: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     token: Mapped[str] = mapped_column(String(512))
     hmac_key: Mapped[str] = mapped_column(String(512), nullable=True)
@@ -66,6 +66,22 @@ class TokenTable(Base):
 
     def __repr__(self) -> dict:
         return {'uid': self.userid, 'token': self.token, 'exp_time': self.expire_time}
+
+
+class VerifyTable(Base):
+    __tablename__ = "verify_code"
+
+    uid: Mapped[int] = mapped_column(
+        INTEGER, primary_key=True, autoincrement=True)
+    userid: Mapped[int] = mapped_column()
+    email: Mapped[Optional[str]] = mapped_column(String(299))
+    code: Mapped[int] = mapped_column(INTEGER)
+    generate_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
+    expire_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
+
+    def __repr__(self) -> dict:
+        return {'userid': self.userid, 'code': self.code, 'exp_time': self.expire_time}
+
 
 
 Base.metadata.create_all(engine)

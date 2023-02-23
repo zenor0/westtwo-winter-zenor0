@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post('/user/login', tags=['user'])
-def login(data: schemas.UserItem, db: Session = Depends(get_db)):
+async def login(data: schemas.UserItem, db: Session = Depends(get_db)):
     cipherPassword = utils.HashSaltPwd(data.password)
     user = crud.get_user_by_name(data.username, db)
 
@@ -25,7 +25,7 @@ def login(data: schemas.UserItem, db: Session = Depends(get_db)):
 
 
 @router.post('/user', tags=['user'])
-def register(data: schemas.RegisterItem, db: Session = Depends(get_db)):
+async def register(data: schemas.RegisterItem, db: Session = Depends(get_db)):
     if data.password != data.checkPassword:
         return ResponseBase(code=201, message='两次输入的密码不一致')
     

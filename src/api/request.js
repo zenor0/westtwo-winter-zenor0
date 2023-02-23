@@ -46,13 +46,14 @@ api.interceptors.response.use(
       // 请求成功并且没有报错
       return Promise.resolve(response)
     } else {
-        // 这里做错误提示
+      // 这里做错误提示
       ElMessage.error(response.data.message)
       return Promise.reject(response)
     }
   },
   error => {
     let message = error.message
+    console.log(error.message)
     if (message === 'Network Error') {
       message = '后端网络故障'
     } else if (message.includes('timeout')) {

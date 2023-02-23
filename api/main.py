@@ -25,7 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 @app.exception_handler(Exception)
-def func(request: Request, exc: Exception):
+async def func(request: Request, exc: Exception):
     return ResponseBase(code=222)
 
 @app.get("/")

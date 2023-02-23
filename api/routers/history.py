@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from .. import auth, schemas, crud, utils, auth
 from ..schemas import ResponseBase
+import math
 
 router = APIRouter()
 PAGE_ITEMS_COUNT = 10
@@ -17,17 +18,20 @@ def calculate_offset(page):
 
 
 @router.get('/user/history', tags=['history'])
-def get_history(page: int, request: Request, db: Session = Depends(get_db)):
+async def get_history(page: int, request: Request, db: Session = Depends(get_db)):
     if not auth.authorized_user(request=request, db=db):
         return ResponseBase(code=201, message='Token expired')
+    
     skip, limit = calculate_offset(page)
     token = request.headers.get('Authorization')
     result = crud.get_history_by_token(token, db, skip, limit)
-    return ResponseBase(data={'list': result})
+    count = crud.get_history_total_by_token(token=token, db=db)
+    
+    return ResponseBase(data={'list': result, 'count': math.ceil(count / PAGE_ITEMS_COUNT)})
 
 
 @router.put('/user/history/lc', tags=['history'])
-def modify(data: schemas.MarkRequestItem, request: Request, db: Session = Depends(get_db)):
+async def modify(data: schemas.MarkRequestItem, request: Request, db: Session = Depends(get_db)):
     if not auth.authorized_user(request=request, db=db):
         return ResponseBase(code=201, message='Token expired')
 
@@ -36,7 +40,7 @@ def modify(data: schemas.MarkRequestItem, request: Request, db: Session = Depend
 
 
 @router.delete('/user/history', tags=['history'])
-def delete(data: schemas.DeleteHistoryRequestItem, request: Request, db: Session = Depends(get_db)):
+async def delete(data: schemas.DeleteHistoryRequestItem, request: Request, db: Session = Depends(get_db)):
     if not auth.authorized_user(request=request, db=db):
         return ResponseBase(code=201, message='Token expired')
 
