@@ -1,4 +1,5 @@
 import time, hashlib
+from . import config
 
 def Timestamp2FormattedDate(timestamp: str | None = None) -> str:
     if timestamp == None:
@@ -7,6 +8,11 @@ def Timestamp2FormattedDate(timestamp: str | None = None) -> str:
     timeArray = time.localtime(timestamp + 1)
     otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
     return otherStyleTime
+
+def FormattedDate2Timestamp(str):
+    timeArray = time.strptime(str, "%Y-%m-%d %H:%M:%S")
+    timestamp = time.mktime(timeArray)
+    return timestamp
 
 def String2Boolean(input):
     if input in [True, 'true', 'True', 'checked']:
@@ -21,8 +27,7 @@ def Boolean2String(val: bool):
         return 'unchecked'
     
 def HashSaltPwd(plain):
-	SALT = 'Mu5!c-W3B5ite-7Est.$'
-	salted = plain + SALT
+	salted = plain + config.SALT
 	ret = hashlib.sha256()
 	ret.update(salted.encode())
 

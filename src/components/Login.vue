@@ -288,12 +288,7 @@ function handleReset() {
   })
 }
 
-function GetCaptcha(email) {
-  userCaptcha(email).then(res => {
-    ElMessage.success(`已向 ${email} 发送验证码, 请及时查收.`)
-  })
 
-}
 
 const loading = ref(false)
 const passwordType = ref('password')
@@ -327,7 +322,13 @@ const countdown = (time) => {
     setTimeout(() => countdown(time), 1000)
   }
 }
+function GetCaptcha(email) {
+  userCaptcha(email).then(res => {
+    ElMessage.success(`已向 ${email} 发送验证码, 请及时查收.`)
+    countdown(60)
+  })
 
+}
 </script>
 
 <style lang="scss" scoped>

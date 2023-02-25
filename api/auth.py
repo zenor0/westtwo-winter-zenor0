@@ -4,6 +4,14 @@ from datetime import timedelta, datetime
 from . import crud, models, schemas, utils
 import jwt
 
+
+import smtplib
+from email.mime.text import MIMEText
+from email.header import Header
+from . import config
+
+
+
 SECRET_KEY = "Mu51CD0WnLO4D_5EcrE7keY!"
 ALGORITHM = "HS256"
 DEFAULT_EXPIRE_MINUTES = 60*24
@@ -51,3 +59,17 @@ def authorized_user(request: Request, db: crud.Session):
         user = db.query(models.UserTable).filter(
             models.UserTable.id == dbToken.userid).first()
         return user.id
+
+
+def send_captcha_email(captcha, recv):
+    message = MIMEText(
+        f'[python-dev] Your captcha is {captcha}. the captcha will be expired in 1 hour.', 'plain', 'utf-8')
+    message['From'] = Header("zenor0-dev", 'utf-8')
+    message['To'] = Header("username", 'utf-8')
+    subject = '[python-dev] Security verify request'
+    message['Subject'] = Header(subject, 'utf-8')
+
+    smtpObj = smtplib.SMTP()
+    smtpObj.connect(config.mail_host, 25)
+    smtpObj.login(config.mail_user, config.mail_pass)
+    smtpObj.sendmail(config.sender, recv, message.as_string())

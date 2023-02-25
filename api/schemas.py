@@ -38,7 +38,7 @@ class MarkRequestItem(BaseModel):
 class ResetRequestItem(BaseModel):
     email: str
     captcha: str
-    
+    password: str
 
 class TokenItem(BaseModel):
     userid: int
