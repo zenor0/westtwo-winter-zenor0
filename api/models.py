@@ -68,19 +68,19 @@ class TokenTable(Base):
         return {'uid': self.userid, 'token': self.token, 'exp_time': self.expire_time}
 
 
-class VerifyTable(Base):
-    __tablename__ = "verify_code"
+class CaptchaTable(Base):
+    __tablename__ = "captcha"
 
     uid: Mapped[int] = mapped_column(
         INTEGER, primary_key=True, autoincrement=True)
     userid: Mapped[int] = mapped_column()
     email: Mapped[Optional[str]] = mapped_column(String(299))
-    code: Mapped[int] = mapped_column(INTEGER)
+    captcha: Mapped[int] = mapped_column(INTEGER)
     generate_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
     expire_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
 
     def __repr__(self) -> dict:
-        return {'userid': self.userid, 'code': self.code, 'exp_time': self.expire_time}
+        return {'userid': self.userid, 'captcha': self.captcha, 'exp_time': self.expire_time}
 
 
 

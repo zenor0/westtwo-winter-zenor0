@@ -11,6 +11,8 @@ class UserItem(BaseModel):
 class RegisterItem(BaseModel):
     username: str
     password: str
+    captcha: str
+    email: str
     checkPassword: str
 
 
@@ -32,6 +34,11 @@ class MarkRequestItem(BaseModel):
     id: int
     fav: bool
 
+
+class ResetRequestItem(BaseModel):
+    email: str
+    captcha: str
+    
 
 class TokenItem(BaseModel):
     userid: int

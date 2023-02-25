@@ -7,6 +7,10 @@ def register_user(data: schemas.RegisterItem, db: Session):
     dataDict = data.dict()
     dataDict.pop('checkPassword')
 
+    # TO-DO
+    # deal with the captcha
+    
+    
     dbItem = models.UserTable(**dataDict)
     dbItem.register_time = utils.Timestamp2FormattedDate()
 
