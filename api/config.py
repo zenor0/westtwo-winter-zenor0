@@ -2,9 +2,9 @@
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:zenor0@localhost:3306/musictest"
 
 # Mail server setting
-MAIL_HOST = "smtp.163.com"  # 设置服务器
-MAIL_USER = "zenor0@163.com"  # 用户名
-MAIL_PASSWORD = "YXUZDNHZAIYPKNQV"  # 口令
+MAIL_HOST = "smtp.163.com" 
+MAIL_USER = "zenor0@163.com"  
+MAIL_PASSWORD = "**" 
 sender = 'zenor0@163.com'
 
 SALT = 'Mu5!c-W3B5ite-7Est.$'

@@ -8,11 +8,13 @@
 
 ## Deploy
 
-1. Install node requirements
-	```sh
-	npm install
-	```
-2. Launch vue
+1. Configurate `api/config.py` file by your own setting. 
+2. Install node requirements
+
+  ```sh
+  npm install
+  ```
+3. Launch vue
    run command `npm run dev`
-3. Launch FastAPI
-   run command `uvicorn api.main:app` to boot back-end
+4. Launch FastAPI
+   run command `uvicorn api.main:app` to boot up back-end
