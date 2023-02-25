@@ -77,7 +77,7 @@
                 </el-icon>
               </template>
               <template #append>
-                <el-button @click="GetCaptcha(registerForm.email)" :disabled="!isAvailable">{{ countdownNumber
+                <el-button @click="GetCaptcha(registerForm.email, {method: 'register'})" :disabled="!isAvailable">{{ countdownNumber
                 }}</el-button>
               </template>
             </el-input>
@@ -137,7 +137,7 @@
                 </el-icon>
               </template>
               <template #append>
-                <el-button @click="GetCaptcha(resetForm.email)" :disabled="!isAvailable">{{ countdownNumber }}</el-button>
+                <el-button @click="GetCaptcha(resetForm.email, {method: 'reset'})" :disabled="!isAvailable">{{ countdownNumber }}</el-button>
               </template>
             </el-input>
           </el-form-item>
@@ -281,8 +281,8 @@ function handleReset() {
   proxy.$refs.resetFormRef.validate(valid => {
     if (valid) {
       userChangePassword(resetForm.value).then(res => {
-        ElMessage.success(`${resetForm.value.username}, 重置成功`)
-        formType.value = 'reset'
+        ElMessage.success(`重置成功`)
+        formType.value = 'login'
       })
     }
   })
@@ -322,10 +322,10 @@ const countdown = (time) => {
     setTimeout(() => countdown(time), 1000)
   }
 }
-function GetCaptcha(email) {
-  userCaptcha(email).then(res => {
+function GetCaptcha(email, data) {
+  userCaptcha(email, data).then(res => {
     ElMessage.success(`已向 ${email} 发送验证码, 请及时查收.`)
-    countdown(60)
+    // countdown(60)
   })
 
 }

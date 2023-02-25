@@ -73,7 +73,6 @@ class CaptchaTable(Base):
 
     uid: Mapped[int] = mapped_column(
         INTEGER, primary_key=True, autoincrement=True)
-    userid: Mapped[int] = mapped_column()
     email: Mapped[str] = mapped_column(String(299))
     captcha: Mapped[str] = mapped_column(String(10))
     generate_time: Mapped[str] = mapped_column(TIMESTAMP, nullable=False)
