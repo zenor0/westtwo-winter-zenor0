@@ -7,6 +7,20 @@ from ..schemas import ResponseBase
 
 router = APIRouter()
 
+# init admin account
+
+def init(db: Session = Depends(get_db)):
+    if crud.get_user_by_name('admin', db) == None:
+        user = schemas.RegisterItem(
+            username='admin',
+            password=utils.HashSaltPwd('123456'),
+            captcha='init',
+            email='zenor0@outlook.com',
+            checkPassword='fill',
+        )
+        crud.register_user(user, db)
+
+# init()
 
 @router.post('/user/login', tags=['user'])
 async def login(data: schemas.UserItem, db: Session = Depends(get_db)):
@@ -67,12 +81,10 @@ async def reset_password(data: schemas.ResetRequestItem, db: Session = Depends(g
 
 @router.get('/user/captcha/{email}', tags=['user'])
 async def request_captcha(email, method, db: Session = Depends(get_db)):
-    if not method:
+    if method not in ['register', 'reset']:
         return ResponseBase(code=201, message='非法调用')
-    
     if not utils.CheckEmail(email) or not email:
         return ResponseBase(code=201, message='邮箱地址不合法')
-    
     if method == 'reset':
         if crud.get_user_by_email(email, db) == None:
             return ResponseBase(code=201, message='该邮箱未注册')
