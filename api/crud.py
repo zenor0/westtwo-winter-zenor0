@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from . import schemas, models, utils, config
-
 # CREATE INTERFACE
 
 
@@ -27,7 +26,8 @@ def create_history(data: schemas.SongItem, userid, db: Session):
 
 
 def save_captcha(email, captcha, db: Session):
-    db.query(models.CaptchaTable).filter(models.CaptchaTable.email == email).delete()
+    db.query(models.CaptchaTable).filter(
+        models.CaptchaTable.email == email).delete()
     dbItem = models.CaptchaTable(
         email=email, captcha=captcha)
     dbItem.generate_time = utils.Timestamp2FormattedDate()
@@ -96,6 +96,7 @@ def mark_history(id, fav, db: Session):
 
 # DELETE INTERFACE
 
+
 def softdelete_single_history(id, db: Session):
     return db.query(models.HistoryTable).filter(models.HistoryTable.id == id).update({models.HistoryTable.deleted: 1})
 
@@ -107,6 +108,7 @@ def softdelete_list_of_history(list, db: Session):
         cnt += 1
 
     return cnt
+
 
 def delete_verified_captcha(email, captcha, db: Session):
     return db.query(models.CaptchaTable).filter(models.CaptchaTable.email == email, models.CaptchaTable.captcha == captcha).delete()

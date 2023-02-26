@@ -1,9 +1,5 @@
-from fastapi import FastAPI, Depends, Request
-from sqlalchemy.orm import Session
+from fastapi import FastAPI, Request
 
-
-from . import schemas, utils
-from .database import SessionLocal, engine
 from .routers import users, search, history
 from .schemas import ResponseBase
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,9 +8,6 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(title='MusicDownload-simple',
               description='西二冬令营项目. Developed by zenor0. Powered by FastAPI & SQLalchemy')
 
-app.include_router(users.router)
-app.include_router(search.router)
-app.include_router(history.router)
 
 origins = ["http://localhost:5173/*", '*']
 app.add_middleware(
@@ -24,9 +17,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-@app.exception_handler(Exception)
-async def func(request: Request, exc: Exception):
-    return ResponseBase(code=222)
+
+app.include_router(users.router)
+app.include_router(search.router)
+app.include_router(history.router)
+
+
+# @app.exception_handler(Exception)
+# async def func(request: Request, exc: Exception):
+#     return ResponseBase(code=222)
+
 
 @app.get("/")
 async def home_page():
