@@ -11,7 +11,7 @@ Project for FZU-West2 winter camp.
 + SQL database (MySQL was used when the project was developing)
 + requirements.txt
 
-**REMEMBER** to modify the `database.py` file manually. You have to modify the database URL as your environment goes.
+**REMEMBER** to modify the `config.py` file manually. You have to modify configurations as your environment goes.
 
 
 
