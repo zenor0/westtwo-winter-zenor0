@@ -44,7 +44,7 @@
       <div class="table-top">
        <el-button type="primary" @click="bulkDownloadRequest">批量下载</el-button>
       </div>
-      <el-table :data="tableData" stripe style="width: 100%" ref="tableRef">
+      <el-table :data="tableData" stripe style="width: 100%" ref="tableRef" @selection-change="selectChangeDown">
        <el-table-column type="selection" width="55" align="center"/>
         <el-table-column type="index" label="序号" width="80" align="center"/>
         <el-table-column prop="name" label="歌曲" align="center"/>
@@ -123,6 +123,11 @@ const searchRequest = () => getSearchList({
 
 const tableRef = ref()
 const tableData = ref([])
+const tableSelection = ref([])
+
+const selectChangeDown = (val)=> {
+  tableSelection.value = val
+}
 
 const changeIndex = (index) => {
   activeIndex.value = index
@@ -151,7 +156,7 @@ const bulkDownloadRequest = () => {
   tableSelection.value.forEach(each => {
     console.log(each.rid)
     setTimeout(()=>{
-      downloadRequest(each.rid)
+      downloadRequest(each)
     },1000*Math.random())
   })
 }
