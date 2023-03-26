@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 
-from .routers import users, search, history
-from .schemas import ResponseBase
+from routers import users, search, history
+# from .schemas import ResponseBase
 from fastapi.middleware.cors import CORSMiddleware
 
 # FastAPI Configuration

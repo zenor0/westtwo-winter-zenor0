@@ -1,0 +1,55 @@
+services:
+# docker run -dp 8000:8000 --network test-be `
+# -e MYSQL_HOST=music-db `
+# -e MYSQL_USER=root `
+# -e MYSQL_PASSWORD=zenor0 `
+# -e MYSQL_DB=music_down_site `
+# fastapi 
+  music-api:
+    working_dir: /api
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      MYSQL_HOST: music-db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: zenor0
+      MYSQL_DB: music_down_site
+    networks:
+      - backends
+    depends_on:
+      - music-db
+
+# docker run -d `
+# --network test-be --network-alias music-db `
+# -v music-mysql-data:/var/lib/mysql `
+# -e MYSQL_ROOT_PASSWORD=zenor0 `
+# -e MYSQL_DATABASE=music_down_site `
+# mysql:8.0
+  music-db:
+    working_dir: /api
+    image: mysql:8.0
+    volumes:
+      - music-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: zenor0
+      MYSQL_DATABASE: music_down_site
+    networks:
+      - backends
+    expose:
+      - 3306
+
+#  docker run -dp 5173:5173 --network api_backends vite-front
+  frontend:
+    build: .
+    ports:
+      - 5173:5173
+    networks:
+      - backends
+    
+
+networks:
+  backends:
+
+volumes:
+  music-mysql-data:

@@ -1,5 +1,5 @@
 # Database setting
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:zenor0@localhost:3306"
+SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:zenor0@music-db:3306"
 
 # Mail server setting
 MAIL_HOST = "smtp.163.com" 

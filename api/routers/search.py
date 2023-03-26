@@ -3,9 +3,9 @@ from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
 import requests, urllib.parse
-from ..database import get_db
-from .. import auth, schemas, crud, utils, auth
-from ..schemas import ResponseBase
+from support.database import get_db
+from support import auth, schemas, crud, utils, auth
+from support.schemas import ResponseBase
 
 PROXIES={
     'http': 'http://localhost:7890'
@@ -65,8 +65,8 @@ async def download(rid, request: Request, db: Session = Depends(get_db)):
         return ResponseBase(code=201, message='Token expired')
     
     downTmp = requests.get(f'https://link.hhtjim.com/kw/{rid}.mp3')
-    with open(f'./tmp/music/{rid}.mp3', 'wb') as file:
+    with open(f'./tmp/{rid}.mp3', 'wb') as file:
         file.write(downTmp.content)
     
     crud.create_history(get_song_info(rid), userid, db)
-    return FileResponse(f'./tmp/music/{rid}.mp3', media_type='audio/mpeg')
+    return FileResponse(f'./tmp/{rid}.mp3', media_type='audio/mpeg')
