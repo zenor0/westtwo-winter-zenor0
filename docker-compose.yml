@@ -7,9 +7,11 @@ services:
 # fastapi 
   music-api:
     working_dir: /api
-    build: .
+    build: /api/.
     ports:
       - 8000:8000
+    env_file:
+      - /.env
     environment:
       MYSQL_HOST: music-db
       MYSQL_USER: root

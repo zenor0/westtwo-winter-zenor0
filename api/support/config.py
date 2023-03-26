@@ -1,11 +1,15 @@
+import os
+env_dist = os.environ
+
 # Database setting
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:zenor0@music-db:3306"
 
 # Mail server setting
-MAIL_HOST = "smtp.163.com" 
-MAIL_USER = "zenor0@163.com"  
-MAIL_PASSWORD = "**" 
-sender = 'zenor0@163.com'
+
+MAIL_HOST = env_dist.get("MAIL_HOST")
+MAIL_USER = env_dist.get("MAIL_USER")
+MAIL_PASSWORD = env_dist.get("MAIL_PASSWORD")
+sender = MAIL_USER
 
 SALT = 'Mu5!c-W3B5ite-7Est.$'
 
